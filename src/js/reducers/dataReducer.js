@@ -1,15 +1,20 @@
 import _ from 'lodash'
 
 export default function reducer(state={
-    data: newData(),
+    data: {
+        one: createNewData('one'),
+        two: createNewData('two'),
+    }
 }, action) {
 
     switch (action.type) {
         case "FETCH_DATA": {
+            let updatedData = Object.assign({}, state.data, {});
+            updatedData[action.payload.key] = createNewData(action.payload.key);
             let obj = Object.assign({}, 
                 state, 
                 {
-                    data: newData()
+                    data: updatedData
                 }
             );
             return obj;
@@ -18,7 +23,7 @@ export default function reducer(state={
     return state;
 }
 
-function newData() {
+function createNewData(key) {
     const numberOfColumns = Math.ceil(Math.random() * 10)
     const numberOfRows = Math.ceil(Math.random() * 10)
 
@@ -26,7 +31,7 @@ function newData() {
     for (let i = 0; i < numberOfRows; i++) {
         let entry = {}
         for (let j = 0; j < numberOfColumns; j++) { 
-            entry['column'+j] = `col_${j}_entry_${i}`
+            entry['column'+j] = `${key}_col_${j}_entry_${i}`
         }
         data.push(entry)
     }
