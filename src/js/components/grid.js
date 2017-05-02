@@ -25,6 +25,14 @@ export class Grid extends React.Component {
         };
     }
 
+    componentDidMount() {
+        let columns = this.getColumns(this.props.data)
+            this.setState({
+                rows: this.props.data,
+                columns: columns
+            })
+    }
+
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.data !== this.props.data) {
             let columns = this.getColumns(this.props.data)
